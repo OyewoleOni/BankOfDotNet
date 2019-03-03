@@ -40,6 +40,7 @@ namespace BankOfDotNet.IdentityServer
         {
             return new List<Client>
             {
+                //Client Credential base grant type
                 new Client
                 {
                     ClientId ="client",
@@ -49,7 +50,20 @@ namespace BankOfDotNet.IdentityServer
                         new Secret("secret".Sha256())
                     },
                     AllowedScopes ={ "bankOfDotnetApi" }
-                }
+                },
+
+                //Resource Owner Password grant type
+                new Client
+                {
+                    ClientId ="ro.client",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedScopes ={ "bankOfDotnetApi" }
+
+                } 
             };
         }
     }

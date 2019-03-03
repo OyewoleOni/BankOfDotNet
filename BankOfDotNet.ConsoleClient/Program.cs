@@ -14,6 +14,27 @@ namespace BankOfDotNet.ConsoleClient
 
         private static async Task MainAsync()
         {
+            var discoRO = await DiscoveryClient.GetAsync("http://localhost:5000");
+            if (discoRO.IsError)
+            {
+                Console.WriteLine(discoRO.Error);
+                return;
+            }
+
+            //Grab a bearer token using resource owner password
+            var tokenClientRO = new TokenClient(discoRO.TokenEndpoint, "ro.client", "secret");
+
+            var tokenResponseRO = await tokenClientRO.RequestResourceOwnerPasswordAsync
+                ("Oyewole","password", "bankOfDotnetApi");
+
+            if (tokenResponseRO.IsError)
+            {
+                Console.WriteLine(tokenResponseRO.Error);
+                return;
+            }
+            Console.WriteLine(tokenResponseRO.Json);
+            Console.WriteLine("\n\n");
+
             // discover all endpoints using metadata of identity server
             var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
 
