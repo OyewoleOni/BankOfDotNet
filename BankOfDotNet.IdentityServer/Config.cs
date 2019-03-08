@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,14 @@ namespace BankOfDotNet.IdentityServer
                     ClientName ="MVC  Client",
                     AllowedGrantTypes = GrantTypes.Implicit,
 
-                    RedirectUris = {"http://localhost:5003/signin-oidc"}
+                    RedirectUris = {"http://localhost:5003/signin-oidc"},
+                    PostLogoutRedirectUris = {"http://localhost:5003/signout-callback-oidc"},
+
+                    AllowedScopes = new List<string>
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    }
                 }
             };
         }
