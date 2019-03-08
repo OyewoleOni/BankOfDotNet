@@ -9,6 +9,15 @@ namespace BankOfDotNet.IdentityServer
 {
     public class Config
     {
+        public static IEnumerable<IdentityResource> GetIdentityResources()
+        {
+            return new List<IdentityResource>
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile()
+            };
+        }
+
         public static List<TestUser> GetUsers()
         {
             return new List<TestUser>
@@ -38,6 +47,8 @@ namespace BankOfDotNet.IdentityServer
 
         public static IEnumerable<Client> GetClients()
         {
+
+
             return new List<Client>
             {
                 //Client Credential base grant type
@@ -63,7 +74,17 @@ namespace BankOfDotNet.IdentityServer
                     },
                     AllowedScopes ={ "bankOfDotnetApi" }
 
-                } 
+                },
+                //Implicit Flow Grant Type
+
+                new Client
+                {
+                    ClientId = "mvc",
+                    ClientName ="MVC  Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+
+                    RedirectUris = {"http://localhost:5003/signin-oidc"}
+                }
             };
         }
     }
